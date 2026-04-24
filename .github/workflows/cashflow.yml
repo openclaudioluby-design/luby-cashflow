@@ -33,9 +33,7 @@ jobs:
           LUBY_BASE_DIR: ${{ github.workspace }}
         run: python3 main.py
 
-      - name: Upload relatórios
-        uses: actions/upload-artifact@v4
-        with:
-          name: relatorios-${{ github.run_id }}
-          path: relatorios/
-          retention-days: 90
+      - name: Relatórios gerados (locais)
+        run: |
+          echo "Relatórios salvos localmente em: $(pwd)/relatorios/"
+          ls -lh relatorios/ 2>/dev/null || echo "Nenhum relatório gerado ainda"
