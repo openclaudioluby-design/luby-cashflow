@@ -1,0 +1,8 @@
+*.db
+logs/*.log
+dados/historico/*
+dados/omie_drop/*
+dados/sheets_cache/*
+__pycache__/
+.env
+cloudflared

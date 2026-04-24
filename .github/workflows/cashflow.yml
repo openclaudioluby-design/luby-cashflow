@@ -1,0 +1,41 @@
+name: luby-cashflow diário
+
+on:
+  schedule:
+    - cron: "0 10 * * *"   # 07:00 BRT (UTC-3) = 10:00 UTC
+  workflow_dispatch:        # permite rodar manualmente pelo GitHub
+
+jobs:
+  cashflow:
+    runs-on: self-hosted    # roda no runner local desta máquina
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verifica Python
+        run: python3 --version
+
+      - name: Instala dependências
+        run: |
+          python3 -m pip install --quiet \
+            gspread google-auth pandas openpyxl requests pyyaml
+
+      - name: Verifica Ollama
+        run: |
+          curl -sf http://localhost:11434/api/tags > /dev/null \
+            && echo "Ollama OK" \
+            || echo "AVISO: Ollama não está rodando — projeção IA será pulada"
+
+      - name: Roda pipeline cashflow
+        env:
+          LUBY_BASE_DIR: ${{ github.workspace }}
+        run: python3 main.py
+
+      - name: Upload relatórios
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorios-${{ github.run_id }}
+          path: relatorios/
+          retention-days: 90

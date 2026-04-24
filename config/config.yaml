@@ -1,0 +1,24 @@
+sheets:
+  pipeline_br_id: "COLE_O_ID_DA_PLANILHA_BR_AQUI"
+  pipeline_br_aba: "Pipeline"
+  pipeline_us_id: "COLE_O_ID_DA_PLANILHA_US_AQUI"
+  pipeline_us_aba: "Pipeline"
+  rp_bi_id: "COLE_O_ID_DA_PLANILHA_RP_BI_AQUI"
+  rp_bi_aba: "Projeção"
+
+cambio:
+  usd_brl_padrao: 5.10  # usado como fallback se API de câmbio falhar
+
+ollama:
+  base_url: "http://localhost:11434"
+  model: "qwen2.5:14b"   # modelo disponível localmente
+  timeout_segundos: 180
+
+caminhos:
+  omie_drop: "dados/omie_drop"
+  historico: "dados/historico"
+  relatorios: "relatorios"
+  log: "logs/cashflow.log"
+
+cron:
+  horario: "0 7 * * *"  # todos os dias às 7h

@@ -1,0 +1,28 @@
+name: dry-run (teste)
+
+on:
+  workflow_dispatch:   # só manual
+
+jobs:
+  dry-run:
+    runs-on: self-hosted
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Instala dependências
+        run: |
+          python3 -m pip install --quiet \
+            gspread google-auth pandas openpyxl requests pyyaml
+
+      - name: Dry-run com dados mock
+        run: python3 main.py --dry-run
+
+      - name: Upload relatório de teste
+        uses: actions/upload-artifact@v4
+        with:
+          name: dry-run-${{ github.run_id }}
+          path: relatorios/
+          retention-days: 7
